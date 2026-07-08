@@ -77,7 +77,10 @@
   /* Bleed the ring: padding so the active card's ring isn't clipped */
   padding: var(--ring);
   margin: calc(-1 * var(--ring));
-  overflow: visible;
+  /* Per Figma: cards clip at the left content edge (clean gutter beside the
+     active card) but bleed past the right padding to the screen edge. One
+     side clips, the other doesn't — hence clip-path, not overflow. */
+  clip-path: inset(0 -100vw 0 0);
 }
 
 .carousel__track {
@@ -95,7 +98,9 @@
 .carousel__track.no-transition { transition: none; }
 
 @media (prefers-reduced-motion: reduce) {
-  .carousel__track { transition: none; }
+  /* Near-zero rather than none: transitionend must still fire, or the
+     navigation gate and the infinite-scroll snap would never run. */
+  .carousel__track { transition-duration: 0.01ms; }
 }
 
 .carousel__cell {

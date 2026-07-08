@@ -11,11 +11,14 @@ npm install
 npm run dev
 ```
 
-## Adding the media files
+## Media files
 
-Drop the provided videos into `public/videos/` and update the manifest in
-`src/data/media.ts` (id, title, src). Slides whose source is missing or fails
-to load render the Figma checkerboard placeholder instead of breaking.
+The 15 provided videos are included in `public/videos/`, re-encoded to 720p
+portrait (H.264, CRF 28) so the repo stays clonable and the first slide can
+autoplay without pulling a 130 MB original. The manifest in
+`src/data/media.ts` maps each file to an id/title. Slides whose source is
+missing or fails to load render the Figma checkerboard placeholder instead
+of breaking.
 
 ## Architecture
 
