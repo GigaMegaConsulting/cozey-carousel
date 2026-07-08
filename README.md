@@ -72,8 +72,10 @@ desync the active index (the same input-storm discipline flagged in the
 Part 1 review).
 
 **Accessibility.** `aria-roledescription="carousel"`, keyboard ←/→ support,
-visible focus rings, a polite live region announcing "Video 2 of 5: …", and
-`prefers-reduced-motion` disables the slide animation.
+visible focus rings, a polite live region announcing "Video 2 of 15: …", and
+`prefers-reduced-motion` drops the slide animation to a near-zero duration
+(not `none` — `transitionend` must still fire for the navigation gate and
+the infinite-scroll snap).
 
 **Mobile.** Arrows hide under 640px per the Figma comp (swipe-first layouts);
 keyboard navigation still works. Card width switches to `78vw` for the
@@ -81,7 +83,21 @@ one-card-plus-peek composition.
 
 ## Bonus ideas (not implemented, easy next steps)
 
-- Touch/drag gestures on the track (pointer events + threshold)
-- IntersectionObserver to pause the active video when the section scrolls
-  off-screen
-- `preload="none"` upgrade strategy: prime only active ± 1 neighbors
+**Swipe to navigate.** Mobile users expect to drag the carousel, not just
+use arrows/keyboard. Pointer events on the track + a distance threshold
+would map a swipe to the same `next()`/`prev()` the arrows use.
+
+**Pause when scrolled off-screen.** If the carousel section leaves the
+viewport, the active video keeps playing for nobody. An
+`IntersectionObserver` on the section could pause playback while it's
+off-screen and resume on re-entry.
+
+**Load only the videos the user can reach.** Every slide currently uses
+`preload="metadata"`, so the browser fetches header info (duration + first
+frame) for all 15 videos up front. Smarter: default every slide to
+`preload="none"` (no network at all) and upgrade just the active slide and
+its two immediate neighbors — the only slides reachable in one gesture — to
+`metadata`. As the user navigates, this three-slide window follows them.
+Same instant-feeling navigation, a fraction of the requests. `Carousel`
+already computes each slide's position, so this is one new prop and a
+`preload` value derived from distance-to-active.
