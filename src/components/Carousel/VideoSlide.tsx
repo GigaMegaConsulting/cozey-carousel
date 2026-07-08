@@ -1,13 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import type { MediaItem } from "./types";
-
-interface VideoSlideProps {
-  item: MediaItem;
-  /** Only the active slide plays, shows controls, and accepts pointer input. */
-  isActive: boolean;
-  isMuted: boolean;
-  onToggleMute: () => void;
-}
+import { Button } from "../Button";
+import { Icon } from "../Icon";
+import { Text } from "../Text";
+import type { VideoSlideProps } from "./types";
 
 /**
  * One card in the carousel. Owns its <video> element and enforces the
@@ -75,60 +70,24 @@ export function VideoSlide({ item, isActive, isMuted, onToggleMute }: VideoSlide
 
         {isActive && (
           <div className="carousel-slide__controls">
-            <button
-              type="button"
-              className="icon-btn"
+            <Button
+              size="sm"
+              icon={<Icon name={isMuted ? "volume-muted" : "volume"} />}
               onClick={onToggleMute}
               aria-label={isMuted ? "Unmute video" : "Mute video"}
-            >
-              {isMuted ? <MutedIcon /> : <SoundIcon />}
-            </button>
-            <button
-              type="button"
-              className="icon-btn"
+            />
+            <Button
+              size="sm"
+              icon={<Icon name={isPaused ? "play" : "pause"} />}
               onClick={togglePlay}
               aria-label={isPaused ? "Play video" : "Pause video"}
-            >
-              {isPaused ? <PlayIcon /> : <PauseIcon />}
-            </button>
+            />
           </div>
         )}
       </div>
-      <figcaption className="carousel-slide__title">{item.title}</figcaption>
+      <Text variant="caption" as="figcaption" className="carousel-slide__title">
+        {item.title}
+      </Text>
     </figure>
-  );
-}
-
-/* Inline icons — keeps the component dependency-free */
-function MutedIcon() {
-  return (
-    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <path d="M11 5 6 9H2v6h4l5 4V5z" />
-      <line x1="22" y1="9" x2="16" y2="15" />
-      <line x1="16" y1="9" x2="22" y2="15" />
-    </svg>
-  );
-}
-function SoundIcon() {
-  return (
-    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <path d="M11 5 6 9H2v6h4l5 4V5z" />
-      <path d="M15.5 8.5a5 5 0 0 1 0 7" />
-    </svg>
-  );
-}
-function PauseIcon() {
-  return (
-    <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden>
-      <rect x="6" y="4" width="4" height="16" rx="1" />
-      <rect x="14" y="4" width="4" height="16" rx="1" />
-    </svg>
-  );
-}
-function PlayIcon() {
-  return (
-    <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden>
-      <path d="M8 5v14l11-7z" />
-    </svg>
   );
 }

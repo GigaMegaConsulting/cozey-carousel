@@ -22,13 +22,25 @@ of breaking.
 
 ## Architecture
 
+Every component lives in its own folder with its own `types.ts` and
+`index.ts` barrel, so each one can be lifted into another project as a unit.
+The UI primitives (`Text`, `Icon`, `Button`) are app-agnostic; `Carousel`
+composes them.
+
 ```
-src/components/Carousel/
-  useCarousel.ts   ← infinite-scroll logic (pure state, no DOM)
-  VideoSlide.tsx   ← one card; owns its <video>, enforces active-only rules
-  Carousel.tsx     ← thin orchestrator: header, arrows, track, a11y
-  Carousel.css     ← geometry + Figma styling
-  types.ts         ← MediaItem contract
+src/components/
+  Text/            ← all text goes through this: variant = heading |
+                     subheading | body | caption; polymorphic `as` prop
+  Icon/            ← glyph registry (chevrons, play/pause, volume), sized
+                     by parents, currentColor, decorative by default
+  Button/          ← size (sm/md/lg) × variant (primary/secondary) ×
+                     content (label / icon+label / icon-only → circle)
+  Carousel/
+    useCarousel.ts   ← infinite-scroll logic (pure state, no DOM)
+    VideoSlide.tsx   ← one card; owns its <video>, enforces active-only rules
+    Carousel.tsx     ← thin orchestrator: header, arrows, track, a11y
+    Carousel.css     ← geometry + Figma styling
+    types.ts         ← MediaItem / CarouselProps / VideoSlideProps contracts
 ```
 
 ## Design decisions

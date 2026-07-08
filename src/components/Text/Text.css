@@ -1,0 +1,27 @@
+.text {
+  margin: 0;
+  color: var(--cozey-navy);
+}
+
+.text--heading {
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+  font-weight: 600;
+}
+
+.text--subheading {
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 1.6vw, 1.35rem);
+  font-weight: 600;
+}
+
+.text--body {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.text--caption {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+}

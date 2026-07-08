@@ -1,2 +1,2 @@
 export { Carousel } from "./Carousel";
-export type { MediaItem } from "./types";
+export type { MediaItem, CarouselProps, VideoSlideProps } from "./types";

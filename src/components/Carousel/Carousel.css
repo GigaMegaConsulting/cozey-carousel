@@ -35,36 +35,9 @@
   margin-bottom: 28px;
 }
 
-.carousel__heading {
-  font-family: var(--font-display);
-  font-size: clamp(1.35rem, 2.2vw, 1.75rem);
-  font-weight: 600;
-  color: var(--cozey-navy);
-  margin: 0;
-}
-
 .carousel__nav {
   display: flex;
   gap: 12px;
-}
-
-.nav-btn {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: 1px solid var(--cozey-border);
-  background: var(--cozey-white);
-  color: var(--cozey-navy);
-  display: grid;
-  place-items: center;
-  cursor: pointer;
-  transition: background-color 0.15s ease, transform 0.15s ease;
-}
-.nav-btn:hover { background: var(--cozey-blue-50); }
-.nav-btn:active { transform: scale(0.94); }
-.nav-btn:focus-visible {
-  outline: 2px solid var(--cozey-blue);
-  outline-offset: 2px;
 }
 
 /* Hide arrows on touch layouts where swiping is natural — Figma mobile
@@ -161,28 +134,8 @@
   gap: 8px;
 }
 
-.icon-btn {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  border: 1px solid var(--cozey-border);
-  background: var(--cozey-white);
-  color: var(--cozey-navy);
-  display: grid;
-  place-items: center;
-  cursor: pointer;
-  transition: background-color 0.15s ease;
-}
-.icon-btn:hover { background: var(--cozey-blue-50); }
-.icon-btn:focus-visible {
-  outline: 2px solid var(--cozey-blue);
-  outline-offset: 2px;
-}
-
 .carousel-slide__title {
   margin-top: 12px;
-  font-size: 0.95rem;
-  color: var(--cozey-navy);
 }
 
 /* --- Utilities ------------------------------------------------------------*/

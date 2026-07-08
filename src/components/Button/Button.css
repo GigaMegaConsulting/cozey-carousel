@@ -1,0 +1,51 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+.btn:active:not(:disabled) { transform: scale(0.94); }
+.btn:focus-visible {
+  outline: 2px solid var(--cozey-blue);
+  outline-offset: 2px;
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* Variants */
+.btn--secondary {
+  background: var(--cozey-white);
+  border: 1px solid var(--cozey-border);
+  color: var(--cozey-navy);
+}
+.btn--secondary:hover:not(:disabled) { background: var(--cozey-blue-50); }
+
+.btn--primary {
+  background: var(--cozey-navy);
+  border: 1px solid var(--cozey-navy);
+  color: var(--cozey-white);
+}
+.btn--primary:hover:not(:disabled) { background: #2a4a75; }
+
+/* Sizes */
+.btn--sm { height: 34px; padding: 0 14px; font-size: 0.85rem; }
+.btn--md { height: 44px; padding: 0 20px; font-size: 0.95rem; }
+.btn--lg { height: 56px; padding: 0 28px; font-size: 1.05rem; }
+
+/* Icon-only buttons are circles: width locks to the size's height */
+.btn--icon-only { padding: 0; }
+.btn--icon-only.btn--sm { width: 34px; }
+.btn--icon-only.btn--md { width: 44px; }
+.btn--icon-only.btn--lg { width: 56px; }
+
+/* The button sizes its icon, whatever the Icon's own default */
+.btn__icon { display: grid; place-items: center; }
+.btn--sm .btn__icon svg { width: 14px; height: 14px; }
+.btn--md .btn__icon svg { width: 18px; height: 18px; }
+.btn--lg .btn__icon svg { width: 22px; height: 22px; }

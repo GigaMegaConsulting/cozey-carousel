@@ -8,3 +8,17 @@ export interface MediaItem {
   /** Optional poster shown before playback / if the video fails to load */
   poster?: string;
 }
+
+export interface CarouselProps {
+  items: MediaItem[];
+  /** Section heading, per Figma ("A day in the life") */
+  heading?: string;
+}
+
+export interface VideoSlideProps {
+  item: MediaItem;
+  /** Only the active slide plays, shows controls, and accepts pointer input. */
+  isActive: boolean;
+  isMuted: boolean;
+  onToggleMute: () => void;
+}
