@@ -1,0 +1,23 @@
+/* Cozey design tokens — sampled from the Figma comp */
+:root {
+  --cozey-sand: #efede7;      /* section background */
+  --cozey-white: #fdfdfb;
+  --cozey-navy: #1c3557;      /* headings, icons, body */
+  --cozey-blue: #6d8cff;      /* periwinkle accent / active ring */
+  --cozey-blue-30: rgba(109, 140, 255, 0.35);
+  --cozey-blue-50: #eef1ff;
+  --cozey-border: #e3e1da;
+
+  --font-display: "Recoleta", "Fraunces", Georgia, serif;
+  --font-body: "Inter", -apple-system, "Segoe UI", sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--cozey-navy);
+  background: var(--cozey-sand);
+  -webkit-font-smoothing: antialiased;
+}

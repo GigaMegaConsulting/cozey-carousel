@@ -1,0 +1,195 @@
+/* ---------------------------------------------------------------------------
+ * Carousel — styled to the Cozey Figma
+ * Geometry is driven by two custom properties so the JS transform and the
+ * responsive layout share one source of truth:
+ *   --slide-w   card width
+ *   --slide-gap gap between cards
+ * The track position is computed *in CSS* from --ext-index (set inline by
+ * React), so resizing never desyncs the transform.
+ * ------------------------------------------------------------------------- */
+
+.carousel {
+  --slide-w: clamp(240px, 22vw, 320px);
+  --slide-gap: 24px;
+  /* Blue highlight ring around the active card (per Figma) */
+  --ring: 3px;
+
+  background: var(--cozey-sand);
+  padding: 48px clamp(20px, 5vw, 80px) 64px;
+  overflow: hidden;
+}
+
+/* Mobile: one card + a peek of the next */
+@media (max-width: 640px) {
+  .carousel {
+    --slide-w: 78vw;
+    --slide-gap: 16px;
+    padding: 32px 20px 48px;
+  }
+}
+
+.carousel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+.carousel__heading {
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+  font-weight: 600;
+  color: var(--cozey-navy);
+  margin: 0;
+}
+
+.carousel__nav {
+  display: flex;
+  gap: 12px;
+}
+
+.nav-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--cozey-border);
+  background: var(--cozey-white);
+  color: var(--cozey-navy);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+.nav-btn:hover { background: var(--cozey-blue-50); }
+.nav-btn:active { transform: scale(0.94); }
+.nav-btn:focus-visible {
+  outline: 2px solid var(--cozey-blue);
+  outline-offset: 2px;
+}
+
+/* Hide arrows on touch layouts where swiping is natural — Figma mobile
+   comp shows no arrows. Keyboard users on mobile keep arrow-key support. */
+@media (max-width: 640px) {
+  .carousel__nav { display: none; }
+}
+
+.carousel__viewport {
+  /* Bleed the ring: padding so the active card's ring isn't clipped */
+  padding: var(--ring);
+  margin: calc(-1 * var(--ring));
+  overflow: visible;
+}
+
+.carousel__track {
+  display: flex;
+  gap: var(--slide-gap);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  transform: translateX(
+    calc(-1 * var(--ext-index) * (var(--slide-w) + var(--slide-gap)))
+  );
+  transition: transform 0.45s cubic-bezier(0.33, 1, 0.68, 1);
+  will-change: transform;
+}
+.carousel__track.no-transition { transition: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .carousel__track { transition: none; }
+}
+
+.carousel__cell {
+  flex: 0 0 var(--slide-w);
+}
+
+/* --- Slide ---------------------------------------------------------------*/
+
+.carousel-slide {
+  margin: 0;
+}
+
+.carousel-slide__frame {
+  position: relative;
+  aspect-ratio: 3 / 4.6; /* tall portrait cards, per Figma */
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--cozey-white);
+  border: 1px solid var(--cozey-border);
+  transition: box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+/* Active-card highlight: periwinkle ring, per Figma */
+.carousel-slide.is-active .carousel-slide__frame {
+  border-color: var(--cozey-blue);
+  box-shadow: 0 0 0 var(--ring) var(--cozey-blue-30);
+}
+
+/* Only the active slide accepts input — inactive videos are inert */
+.carousel-slide:not(.is-active) .carousel-slide__frame {
+  pointer-events: none;
+}
+.carousel-slide:not(.is-active) { opacity: 0.92; }
+
+.carousel-slide__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Checkerboard placeholder — mirrors the Figma empty state */
+.carousel-slide__placeholder {
+  width: 100%;
+  height: 100%;
+  --check: 22px;
+  background:
+    conic-gradient(#e8e6e0 90deg, #f7f6f2 90deg 180deg, #e8e6e0 180deg 270deg, #f7f6f2 270deg)
+    0 0 / var(--check) var(--check);
+}
+
+.carousel-slide__controls {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.icon-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--cozey-border);
+  background: var(--cozey-white);
+  color: var(--cozey-navy);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+.icon-btn:hover { background: var(--cozey-blue-50); }
+.icon-btn:focus-visible {
+  outline: 2px solid var(--cozey-blue);
+  outline-offset: 2px;
+}
+
+.carousel-slide__title {
+  margin-top: 12px;
+  font-size: 0.95rem;
+  color: var(--cozey-navy);
+}
+
+/* --- Utilities ------------------------------------------------------------*/
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
